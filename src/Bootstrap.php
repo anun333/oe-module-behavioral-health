@@ -51,6 +51,14 @@ final class Bootstrap
         return OpenEmr::webRoot() . self::MODULE_INSTALLATION_PATH . '/public/' . $page . ($query === [] ? '' : '?' . http_build_query($query));
     }
 
+    /** Ends a page with a short message, still as a whole page with its language and title. */
+    public static function stop(string $title, string $message): never
+    {
+        echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>' . text($title) . '</title></head><body><main><p>'
+            . text($message) . '</p></main></body></html>';
+        exit;
+    }
+
     public function addMenuItem(MenuEvent $event): MenuEvent
     {
         $item = new \stdClass();

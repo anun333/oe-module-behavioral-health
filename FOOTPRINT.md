@@ -38,7 +38,7 @@ Global functions the module calls that PHP doesn't provide and the module doesn'
 
 - `attr()`: `public/accounting.php`, `public/index.php`, `public/patient.php`
 - `oeFormatShortDate()`: `public/accounting.php`, `public/cover.php`, `public/patient.php`, `src/Labels.php`
-- `text()`: `public/accounting.php`, `public/cover.php`, `public/index.php`, `public/patient.php`
+- `text()`: `public/accounting.php`, `public/cover.php`, `public/index.php`, `public/patient.php`, `src/Bootstrap.php`
 - `xl()`: `public/accounting.php`, `public/cover.php`, `public/index.php`, `public/patient.php`, `src/Card/Part2Card.php`, `src/Labels.php`, `vendor/anun333/openhealthcare-common/src/OpenEmr.php`
 - `xlt()`: `public/accounting.php`, `public/cover.php`, `public/index.php`, `public/patient.php`, `src/Bootstrap.php`
 
@@ -76,8 +76,8 @@ As written in the source; whether they behave correctly for a given user is not 
 
 | part | files | lines |
 |---|---|---|
-| pages (`public/`) | 4 | 669 |
-| PHP logic (`src/`) | 9 | 660 |
+| pages (`public/`) | 4 | 670 |
+| PHP logic (`src/`) | 9 | 668 |
 | tools (`tools/`) | 1 | 645 |
 | module wiring | 5 | 144 |
 | tests (`tests/`, `phpunit.xml.dist`) | 3 | 127 |

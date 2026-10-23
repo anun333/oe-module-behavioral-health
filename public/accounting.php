@@ -31,7 +31,7 @@ if (!AclMain::aclCheckCore('patients', 'disclosure')) {
 $pid = (int)($_GET['pid'] ?? 0);
 $patient = QueryUtils::fetchRecords('SELECT `fname`, `lname`, `DOB`, `pubpid` FROM `patient_data` WHERE `pid` = ?', [$pid])[0] ?? null;
 if ($patient === null) {
-    die(xlt('No such patient.'));
+    Bootstrap::stop(xl('Accounting of Disclosures'), xl('No such patient.'));
 }
 $today = new DateTimeImmutable('today');
 $chosen = DateTimeImmutable::createFromFormat('!Y-m-d', (string)($_GET['from'] ?? ''));

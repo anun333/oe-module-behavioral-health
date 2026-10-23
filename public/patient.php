@@ -38,7 +38,7 @@ $canChange = AclMain::aclCheckCore('patients', 'disclosure', '', 'write');
 $pid = (int)($_GET['pid'] ?? OpenEmr::session('pid') ?? 0);
 $patient = QueryUtils::fetchRecords('SELECT `pid`, `fname`, `lname`, `DOB`, `pubpid` FROM `patient_data` WHERE `pid` = ?', [$pid])[0] ?? null;
 if ($patient === null) {
-    die(xlt('No such patient.'));
+    Bootstrap::stop(xl('Part 2 Consents and Disclosures'), xl('No such patient.'));
 }
 $consentRepo = new ConsentRepository();
 $disclosureRepo = new DisclosureRepository();

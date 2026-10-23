@@ -19,6 +19,7 @@ require_once __DIR__ . '/../../../../globals.php';
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Database\QueryUtils;
 use OpenEMR\Core\Header;
+use OpenHealthcare\BehavioralHealth\Bootstrap;
 use OpenHealthcare\BehavioralHealth\Domain\Notice;
 use OpenHealthcare\BehavioralHealth\Labels;
 use OpenHealthcare\BehavioralHealth\Repository\ConsentRepository;
@@ -31,7 +32,7 @@ if (!AclMain::aclCheckCore('patients', 'disclosure')) {
 $disclosure = (new DisclosureRepository())->find((int)($_GET['link'] ?? 0));
 $consent = $disclosure?->consentId === null ? null : (new ConsentRepository())->find($disclosure->consentId, $disclosure->pid);
 if ($disclosure === null || $consent === null || $disclosure->statement === null) {
-    die(xlt('No such disclosure.'));
+    Bootstrap::stop(xl('Notice to Accompany Disclosure'), xl('No such disclosure.'));
 }
 $patient = QueryUtils::fetchRecords('SELECT `fname`, `lname`, `DOB` FROM `patient_data` WHERE `pid` = ?', [$disclosure->pid])[0] ?? [];
 $facility = QueryUtils::fetchRecords(

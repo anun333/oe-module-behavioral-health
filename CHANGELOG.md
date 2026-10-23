@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 (unreleased)
+
+- A page opened for a patient or disclosure that doesn't exist ends as a whole page with its language and title, not bare text (WCAG 2.1 AA, found by the accessibility scan).
+
 ## 0.1.0 (2026-10-23)
 
 **Part 2 consents and disclosures.**
