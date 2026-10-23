@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.1 (unreleased)
+## 0.1.1 (2026-10-23)
 
 - **Checked:** on fresh official 7.0.3, 8.1.0, 8.3.0 and 8.5.0 images it installs through Module Manager and its menu page loads, with every module enabled and with it alone.
 - A page opened for a patient or disclosure that doesn't exist ends as a whole page with its language and title, not bare text (WCAG 2.1 AA, found by the accessibility scan).

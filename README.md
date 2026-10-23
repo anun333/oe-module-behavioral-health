@@ -1,6 +1,6 @@
 # Behavioral Health
 
-> **Status: 0.1.0, a pre-release.** Tested on OpenEMR with synthetic data only.
+> **Status: 0.1.1, a pre-release.** Tested on OpenEMR with synthetic data only.
 
 Part 2 consents and disclosures for OpenEMR, for programs whose substance use disorder records fall under 42 CFR Part 2: certified community behavioral health clinics, mental health and substance use centers, and offices that prescribe buprenorphine. Treatment plans come in 0.2.0.
 
