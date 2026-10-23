@@ -82,7 +82,7 @@ As written in the source; whether they behave correctly for a given user is not 
 | module wiring | 5 | 144 |
 | tests (`tests/`, `phpunit.xml.dist`) | 3 | 127 |
 | install SQL (`sql/`) | 1 | 57 |
-| other | 2 | 28 |
+| other | 1 | 27 |
 
 ## Not covered here
 
