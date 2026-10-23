@@ -1,0 +1,27 @@
+{#
+The Part 2 card on the patient dashboard.
+
+@package   OpenEMR
+@author    anun333 <anun333@posteo.net>
+@copyright Copyright (c) 2026 anun333 <anun333@posteo.net>
+@license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
+#}
+
+{% extends "patient/card/card_base.html.twig" %}
+
+{% block content %}
+<div class="text pl-1">
+    {% if inForce is empty %}
+        <p class="text-muted mb-1">{{ "No Part 2 consent in force."|xlt }}</p>
+    {% else %}
+        <p class="mb-1"><strong>{{ "Consents in force"|xlt }}</strong></p>
+        <ul class="small mb-1 pl-3">
+        {% for c in inForce %}
+            <li>{{ c.recipient|text }}{% if c.ends %} · {{ "ends"|xlt }} {{ c.ends|text }}{% endif %}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% if last %}<p class="small text-muted mb-1">{{ "Last Part 2 disclosure"|xlt }}: {{ last|text }}</p>{% endif %}
+    <a class="btn btn-sm btn-outline-primary" href="{{ pageUrl|attr }}" onclick="top.restoreSession()">{{ "Consents and disclosures"|xlt }}</a>
+</div>
+{% endblock %}
