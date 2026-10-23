@@ -2,7 +2,11 @@
 
 ## 0.1.1 (unreleased)
 
+- **Checked:** on fresh official 7.0.3, 8.1.0, 8.3.0 and 8.5.0 images it installs through Module Manager and its menu page loads, with every module enabled and with it alone.
 - A page opened for a patient or disclosure that doesn't exist ends as a whole page with its language and title, not bare text (WCAG 2.1 AA, found by the accessibility scan).
+- **README:** run OpenEMR on a PHP with PHP's php2shell fix (2026-10-21: 8.2.35, 8.3.36, 8.4.27, 8.5.12 or later). The official OpenEMR 7.0.2 and 7.0.3 Docker images can't get it.
+- **FOOTPRINT.md** now comes from openhealthcare-common's footprint tool (1.1), the one every module shares; `tools/footprint.php` only loads it. The sheet's closing notes, what it can't show, are this module's own (in composer.json): the old ones were the Staff Worklist's and claimed checks of its queues.
+- **Checked:** unit tests; the nightly matrix on 8.4.1 and master (32 checks each).
 
 ## 0.1.0 (2026-10-23)
 

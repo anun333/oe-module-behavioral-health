@@ -7,7 +7,7 @@
     "homepage": "https://github.com/anun333/oe-module-behavioral-health",
     "require": {
         "php": ">=8.2",
-        "anun333/openhealthcare-common": "^1.0",
+        "anun333/openhealthcare-common": "^1.1",
         "openemr/oe-module-installer-plugin": "^0.1.5"
     },
     "require-dev": {
@@ -28,5 +28,13 @@
             "openemr/oe-module-installer-plugin": true
         },
         "sort-packages": true
+    },
+    "extra": {
+        "openhealthcare": {
+            "footprint-not-covered": [
+                "Whether the permission checks above behave correctly for restricted users. The end-to-end check refuses a login without patients/disclosure every page, and lets one with add-only access record but not revoke; the README's \"Who can open what\" section lists the levels.",
+                "Whether a disclosure stays within its consent's scope: staff confirm that, since the module can't read the signed form. The unit tests in `tests/` cover the consent rules; the end-to-end check is described in the CHANGELOG."
+            ]
+        }
     }
 }
