@@ -1,6 +1,6 @@
 # Behavioral Health
 
-> **Status: 0.1.1, a pre-release.** Tested on OpenEMR with synthetic data only.
+> **Status: 0.2.0, a pre-release.** Tested on OpenEMR with synthetic data only.
 
 Part 2 consents and disclosures, and treatment plan reviews, for OpenEMR: for certified community behavioral health clinics, mental health and substance use centers, and offices that prescribe buprenorphine.
 
