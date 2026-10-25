@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.2.0 (unreleased)
+
+**Treatment plan reviews.**
+
+- **Treatment plans on OpenEMR's own Care Plan form.** The goals, interventions and health concerns stay in core's form at a visit. The module records the plan's making and each review against it:
+  - the person's endorsement (CCBHC criterion 4.e.2), who took part, and the signed plan in Documents;
+  - each goal's wording as it read, with its progress;
+  - what changed;
+  - the next review date, which is never later than the clinic's interval allows.
+
+  Core rewrites a care plan's rows on each save, so goals are kept by their wording.
+- **The interval** is 180 days by default, within the CCBHC "no less frequently than every 6 months" (2.b.2). Clinics set their own, and a shorter interval can be applied to plans in progress. Rules read for this: Medicare community mental health centers every 30 days (42 CFR 485.916(d)), and state programs from monthly to yearly. The rules are listed in the openhealthcare workspace.
+- **Treatment plan reviews** in the Staff Worklist (a contributed tab), for plans due within 14 days or overdue. Each due date is its own row, so a dismissal covers one review.
+- **Treatment Plans** in the menu, and a dashboard card with the next review and the goals.
+- Care plans in a visit marked with a sensitivity show only to users allowed it. This holds on the plan page, the card and the Worklist row.
+- Works on OpenEMR 7.0 and later. The care plan's status and target date, which came in 7.0.4, are read only where they exist.
+- **Checked:** unit tests for the schedule (5 new). End to end on 8.4.1 and master, 55 checks each (23 new): the tables, access, the plan and its refusals, reviews and their progress, the Worklist row when overdue, the overdue list, the card, the settings, ending a plan, and the audit log.
+
 ## 0.1.1 (2026-10-23)
 
 - **Checked:** on fresh official 7.0.3, 8.1.0, 8.3.0 and 8.5.0 images it installs through Module Manager and its menu page loads, with every module enabled and with it alone.

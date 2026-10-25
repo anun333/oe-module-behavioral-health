@@ -2,7 +2,7 @@
 
 > **Status: 0.1.1, a pre-release.** Tested on OpenEMR with synthetic data only.
 
-Part 2 consents and disclosures for OpenEMR, for programs whose substance use disorder records fall under 42 CFR Part 2: certified community behavioral health clinics, mental health and substance use centers, and offices that prescribe buprenorphine. Treatment plans come in 0.2.0.
+Part 2 consents and disclosures, and treatment plan reviews, for OpenEMR: for certified community behavioral health clinics, mental health and substance use centers, and offices that prescribe buprenorphine.
 
 What installing it changes in your database, what it reads and writes, and what it hooks into are listed in [FOOTPRINT.md](FOOTPRINT.md), generated from the source.
 
@@ -14,6 +14,12 @@ What installing it changes in your database, what it reads and writes, and what 
   - Staff confirm that the recipient and the information are the ones the consent names. The module can't read the signed form.
 - **The cover sheet.** Each disclosure prints a cover sheet with the 42 CFR 2.32(a) statement the clinic chose (Statement 1, the full notice, or Statement 2, the short one) in the regulation's words. It also says either that a copy of the consent is attached or explains the consent's scope (2.32(b)). A test holds Statement 1 to the text eCFR printed on 2026-10-21.
 - **The accounting of disclosures** (42 CFR 2.25(a)): every Part 2 disclosure in OpenEMR's record for the 3 years before the request, or a shorter period the patient chooses, with the date, the recipient and address, what was disclosed and the purpose. It starts from core's record, so a Part 2 disclosure entered on core's own page is included too, and the page warns when one has no purpose recorded. HHS has put off the compliance date for 2.25 until it revises the HIPAA accounting rule (89 FR 12476), so giving the accounting now is the clinic's choice.
+- **Treatment plans.** The plan itself (goals, interventions, health concerns) is written in OpenEMR's own Care Plan form at a visit; the module doesn't copy it. What the module adds is the review schedule SAMHSA's CCBHC criteria ask for:
+  - Staff record the plan from that care plan form: the date, whether the person endorsed it (signed, agreed and noted, did not agree, or could not take part), who took part, and the signed plan in Documents. The paper plan to sign is Clinic Forms' Behavioral Health Treatment Plan.
+  - Each review, or update after a change, keeps each goal's wording as it read that day, with its progress (met, partly met, not met, changed), what changed, and the next review date.
+  - The next review is never later than the clinic's interval allows. That interval is 180 days by default: the criteria say "no less frequently than every 6 months, unless the state, federal, or applicable accreditation standards are more stringent" (2.b.2). Clinics set their own in the settings, for example 30 days for a Medicare community mental health center (42 CFR 485.916(d)). A shorter interval can be applied to plans already in progress.
+  - Core's Care Plan form rewrites its rows on each save, so the module keeps the goals' wording, not row numbers.
+  - **Treatment plan reviews** in the Staff Worklist (when it is installed) lists each plan whose review is due within 14 days (a setting) or overdue. Recording the review clears it. **Treatment Plans** in the menu lists plans in progress, soonest review first, and a dashboard card shows the next review and the goals.
 - **Where it shows:** a card on the patient dashboard (collapsed for patients with no Part 2 consent or disclosure), the patient's page, and **Part 2 Disclosures** in the menu: disclosures in the last 30 days across patients, and consents ending in the next 30 days.
 
 ## Who can open what
@@ -24,11 +30,19 @@ The same access core's Disclosures page asks for, in OpenEMR's access control:
 - `write` or `addonly` on it to record a consent or a disclosure;
 - `write` to record a revocation or the end of a consent.
 
+For treatment plans, the access core uses for the medical record:
+
+- `patients/med` to see plans and the list;
+- `write` or `addonly` on it to record a plan or a review;
+- `write` to end a plan.
+
+Care plans in a visit marked with a sensitivity show only to users core allows that sensitivity. The settings are for administrators (`admin/super`).
+
 Every page view and change is in the audit log.
 
 ## Not done yet
 
-- Treatment plans with goals, objectives and review dates on core's `care_plan` form, and a Worklist tab for plans due for review (0.2.0).
+- State rules beyond the review interval: who must sign, and how soon the first plan is due after admission, differ by state and program (Texas 10 business days for community mental health, Medicare community mental health centers 7 working days). The module records who took part and the endorsement, and doesn't check either against a state's list.
 - Segmenting Part 2 records from the rest of the chart. That is access control, and it isn't this module's.
 - The accounting of treatment, payment and health care operations disclosures made through an EHR (2.25(b)), which waits on the same HIPAA rule.
 

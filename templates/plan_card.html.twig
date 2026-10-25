@@ -1,0 +1,28 @@
+{#
+The treatment plan card on the patient dashboard.
+
+@package   OpenEMR
+@author    anun333 <anun333@posteo.net>
+@copyright Copyright (c) 2026 anun333 <anun333@posteo.net>
+@license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
+#}
+
+{% extends "patient/card/card_base.html.twig" %}
+
+{% block content %}
+<div class="text pl-1">
+    {% if state is empty %}
+        <p class="text-muted mb-1">{{ "No treatment plan in progress."|xlt }}</p>
+    {% else %}
+        <p class="mb-1{% if overdue %} text-danger{% endif %}"><strong>{{ state|text }}</strong></p>
+        {% if goals is not empty %}
+        <ul class="small mb-1 pl-3">
+        {% for g in goals %}
+            <li>{{ g|text }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endif %}
+    <a class="btn btn-sm btn-outline-primary" href="{{ pageUrl|attr }}" onclick="top.restoreSession()">{{ "Treatment plan"|xlt }}</a>
+</div>
+{% endblock %}

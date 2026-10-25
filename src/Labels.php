@@ -16,6 +16,8 @@ namespace OpenHealthcare\BehavioralHealth;
 
 use OpenHealthcare\BehavioralHealth\Domain\Consent;
 use OpenHealthcare\BehavioralHealth\Domain\Notice;
+use OpenHealthcare\BehavioralHealth\Domain\Plan;
+use OpenHealthcare\BehavioralHealth\Domain\PlanReview;
 
 final class Labels
 {
@@ -52,6 +54,59 @@ final class Labels
             Notice::COPY_OF_CONSENT => xl('A copy of the consent'),
             Notice::SCOPE_EXPLAINED => xl('An explanation of the consent and its scope'),
             default => '',
+        };
+    }
+
+    public static function kind(string $kind): string
+    {
+        return match ($kind) {
+            PlanReview::INITIAL => xl('First plan'),
+            PlanReview::REVIEW => xl('Review'),
+            PlanReview::UPDATE => xl('Update after a change'),
+            default => $kind,
+        };
+    }
+
+    public static function endorsement(string $endorsement): string
+    {
+        return match ($endorsement) {
+            PlanReview::SIGNED => xl('Signed by the person'),
+            PlanReview::VERBAL => xl('Agreed by the person, and noted'),
+            PlanReview::DECLINED => xl('The person did not agree'),
+            PlanReview::UNABLE => xl('The person could not take part'),
+            default => $endorsement,
+        };
+    }
+
+    public static function progress(string $progress): string
+    {
+        return match ($progress) {
+            PlanReview::MET => xl('Met'),
+            PlanReview::PARTLY => xl('Partly met'),
+            PlanReview::NOT_MET => xl('Not met'),
+            PlanReview::CHANGED => xl('Changed'),
+            default => $progress,
+        };
+    }
+
+    public static function entryType(string $type): string
+    {
+        return match ($type) {
+            'health_concern' => xl('Health concern'),
+            'goal' => xl('Goal'),
+            'intervention' => xl('Intervention'),
+            default => $type,
+        };
+    }
+
+    /** Where a plan stands on $today, as a short status. */
+    public static function planState(Plan $plan, \DateTimeImmutable $today, int $aheadDays): string
+    {
+        return match ($plan->state($today, $aheadDays)) {
+            Plan::ENDED => xl('Ended') . ' ' . self::date($plan->endedOn),
+            Plan::OVERDUE => sprintf(xl('Review overdue since %s'), self::date($plan->nextDue())),
+            Plan::DUE => sprintf(xl('Review due %s'), self::date($plan->nextDue())),
+            default => sprintf(xl('Next review %s'), self::date($plan->nextDue())),
         };
     }
 

@@ -1,8 +1,9 @@
 <?php
 
 /**
- * What Behavioral Health adds to OpenEMR: a menu entry for Part 2 disclosures across patients, and a
- * card on the patient dashboard for the patient's Part 2 consents and disclosures.
+ * What Behavioral Health adds to OpenEMR: menu entries for Part 2 disclosures and for treatment plans across
+ * patients, cards on the patient dashboard for the patient's Part 2 consents and disclosures and for their
+ * treatment plan, and a "Treatment plan reviews" tab in the Staff Worklist.
  *
  * @package   OpenEMR
  * @link      https://www.open-emr.org
@@ -15,10 +16,13 @@ declare(strict_types=1);
 
 namespace OpenHealthcare\BehavioralHealth;
 
+use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Events\Core\TwigEnvironmentEvent;
 use OpenEMR\Events\Patient\Summary\Card\SectionEvent;
 use OpenEMR\Menu\MenuEvent;
 use OpenHealthcare\BehavioralHealth\Card\Part2Card;
+use OpenHealthcare\BehavioralHealth\Card\PlanCard;
+use OpenHealthcare\BehavioralHealth\Worklist\PlanReviewSource;
 use OpenHealthcare\Common\OpenEmr;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Loader\FilesystemLoader;
@@ -28,6 +32,8 @@ final class Bootstrap
     public const MODULE_INSTALLATION_PATH = '/interface/modules/custom_modules/oe-module-behavioral-health';
     /** The access a user needs for the menu entry and the pages: section and value, as AclMain checks them. */
     public const ACL = ['patients', 'disclosure'];
+    /** The access for treatment plans: patients/med to see them; write, or addonly, to record. */
+    public const PLAN_ACL = ['patients', 'med'];
     public const TWIG_NAMESPACE = 'behavioralhealth';
 
     public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
@@ -39,6 +45,7 @@ final class Bootstrap
         $this->eventDispatcher->addListener(MenuEvent::MENU_UPDATE, $this->addMenuItem(...));
         $this->eventDispatcher->addListener(TwigEnvironmentEvent::EVENT_CREATED, $this->addTemplates(...));
         $this->eventDispatcher->addListener(SectionEvent::EVENT_HANDLE, $this->addCard(...));
+        $this->eventDispatcher->addListener('staff_worklist.collect_sources', $this->addWorklistTab(...));
     }
 
     /**
@@ -71,6 +78,15 @@ final class Bootstrap
         $item->acl_req = self::ACL;
         $item->global_req = [];
         // After Messages, or at the end.
+        $plans = new \stdClass();
+        $plans->requirement = 0;
+        $plans->target = 'bhplan';
+        $plans->menu_id = 'bhplan0';
+        $plans->label = xlt('Treatment Plans');
+        $plans->url = self::MODULE_INSTALLATION_PATH . '/public/plans.php';
+        $plans->children = [];
+        $plans->acl_req = self::PLAN_ACL;
+        $plans->global_req = [];
         $menu = $event->getMenu();
         $position = count($menu);
         foreach ($menu as $i => $entry) {
@@ -79,7 +95,7 @@ final class Bootstrap
                 break;
             }
         }
-        array_splice($menu, $position, 0, [$item]);
+        array_splice($menu, $position, 0, [$item, $plans]);
         $event->setMenu($menu);
         return $event;
     }
@@ -100,6 +116,17 @@ final class Bootstrap
         $pid = (int)($GLOBALS['pid'] ?? 0);
         if ($pid > 0) {
             $event->addCard(new Part2Card($pid));
+            $event->addCard(new PlanCard($pid));
         }
+    }
+
+    /** "Treatment plan reviews" in the Staff Worklist, for whoever may see medical records, when the Worklist is installed. */
+    public function addWorklistTab(object $event): void
+    {
+        if (!method_exists($event, 'addSource') || !interface_exists('OpenHealthcare\\StaffWorklist\\Source\\WorkSourceInterface')
+            || !AclMain::aclCheckCore('patients', 'med')) {
+            return;
+        }
+        $event->addSource(new PlanReviewSource($event->now), xl('Treatment plan reviews'), xl('Clinician'));
     }
 }
