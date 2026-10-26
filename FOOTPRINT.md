@@ -79,7 +79,7 @@ As written in the source; whether they behave correctly for a given user is not 
 
 ## Settings it reads
 
-- `webroot` (`public/patient.php`, `public/plan.php`, `src/Bootstrap.php`, `vendor/anun333/openhealthcare-common/src/OpenEmr.php`)
+- `webroot` (`public/patient.php`, `public/plan.php`, `src/Bootstrap.php`)
 
 ## Files it writes
 
@@ -101,7 +101,7 @@ As written in the source; whether they behave correctly for a given user is not 
 | pages (`public/`) | 7 | 1194 |
 | tests (`tests/`, `phpunit.xml.dist`) | 4 | 211 |
 | install SQL (`sql/`) | 2 | 173 |
-| module wiring | 5 | 152 |
+| module wiring | 5 | 153 |
 | other | 2 | 55 |
 | tools (`tools/`) | 1 | 31 |
 
