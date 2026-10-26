@@ -147,6 +147,7 @@ $webRoot = OpenEmr::webRoot();
     <meta charset="utf-8">
     <title><?php echo xlt('Part 2 Consents and Disclosures'); ?></title>
     <?php Header::setupHeader(['common', 'datetime-picker']); ?>
+    <?php echo \OpenHealthcare\BehavioralHealth\Contrast::style(); ?>
 </head>
 <body class="body_top">
 <main class="container-fluid py-3" style="max-width: 80rem">

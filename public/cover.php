@@ -48,6 +48,7 @@ $place = trim(implode(', ', array_filter([(string)($facility['street'] ?? ''), t
     <meta charset="utf-8">
     <title><?php echo xlt('Notice to Accompany Disclosure'); ?></title>
     <?php Header::setupHeader(['common']); ?>
+    <?php echo \OpenHealthcare\BehavioralHealth\Contrast::style(); ?>
     <style>
         @media print { .no-print { display: none; } body { font-size: 12pt; } }
         .statement { border: 2px solid #000; padding: 1rem; }

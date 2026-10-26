@@ -40,6 +40,7 @@ $ending = (new ConsentRepository())->endingSoon($today, 30);
     <meta charset="utf-8">
     <title><?php echo xlt('Part 2 Disclosures'); ?></title>
     <?php Header::setupHeader(['common']); ?>
+    <?php echo \OpenHealthcare\BehavioralHealth\Contrast::style(); ?>
 </head>
 <body class="body_top">
 <main class="container-fluid py-3" style="max-width: 70rem">

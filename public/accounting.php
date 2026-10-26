@@ -47,6 +47,7 @@ OpenEmr::audit('patient-record-select', 'Behavioral Health: accounting of Part 2
     <meta charset="utf-8">
     <title><?php echo xlt('Accounting of Disclosures'); ?></title>
     <?php Header::setupHeader(['common']); ?>
+    <?php echo \OpenHealthcare\BehavioralHealth\Contrast::style(); ?>
     <style>@media print { .no-print { display: none; } }</style>
 </head>
 <body class="bg-white">
