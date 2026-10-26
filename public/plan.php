@@ -120,7 +120,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 $done = xl('The review is recorded.');
             }
             if ($asked !== null && $asked->format('Y-m-d') !== $review->nextDue->format('Y-m-d')) {
-                $done .= ' ' . sprintf(xl('The next review is set to %s, the latest the plan interval allows.'), Labels::date($review->nextDue));
+                $done .= ' ' . sprintf($review->nextDue > $asked
+                    ? xl('The next review is set to %s, the earliest it can be, the day after this review.')
+                    : xl('The next review is set to %s, the latest the plan interval allows.'), Labels::date($review->nextDue));
             }
             $active = $repo->active($pid)[0] ?? null;
         }

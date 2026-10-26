@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.4 (unreleased)
+
+- **Revoking or ending a consent twice no longer reports success.** A second submit, or a page left open after someone else recorded it, used to say the revocation was recorded and write an audit entry, though nothing changed and the note was dropped. Now the page says the consent was already revoked (or ended) on that date, and records nothing. A consent with an expiry date can't be ended by an event, and the page says so.
+- **The next review's message:** when the requested date is on or before the review, the next review moves to the day after, and the message now says it's the earliest it can be (it said the latest the interval allows).
+- **42 CFR 2.31(a) citations** in the consent's code comments now name the right paragraphs: (a)(4) for the recipients, (a)(3) for the information.
+
 ## 0.2.3 (2026-10-26)
 
 - **A staff guide:** [GUIDE.md](GUIDE.md) walks through each task by role, with the labels as the pages show them. **Help** on every staff page (not the printed cover sheet or accounting) opens it at this version's tag, in a new window.

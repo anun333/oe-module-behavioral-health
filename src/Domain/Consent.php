@@ -30,9 +30,9 @@ final readonly class Consent
     public const ENDED = 'ended';
 
     /**
-     * @param string $recipient        the name or general designation of who may receive the records (2.31(a)(2))
+     * @param string $recipient        the name or general designation of who may receive the records (2.31(a)(4))
      * @param string $purpose          the purpose of the disclosure (2.31(a)(5))
-     * @param string $information      how much and what kind of information may be disclosed (2.31(a)(1))
+     * @param string $information      how much and what kind of information may be disclosed (2.31(a)(3))
      * @param string $expirationEvent  the expiration event, when the consent names one instead of a date (2.31(a)(7))
      * @param ?\DateTimeImmutable $endedOn the day staff recorded that the expiration event happened
      * @param ?int   $documentId       the signed form in OpenEMR's Documents, when it was scanned
@@ -63,6 +63,20 @@ final readonly class Consent
             $this->revokedOn !== null && $date >= $this->revokedOn => self::REVOKED,
             $this->endedOn !== null && $date >= $this->endedOn => self::ENDED,
             $this->expiresOn !== null && $date > $this->expiresOn => self::EXPIRED,
+            default => null,
+        };
+    }
+
+    /**
+     * Why staff can't record this consent as revoked or ended now, or null when they can: it already
+     * is (a second submit, or a page left open), or, for ended, it ends on a date, not an event.
+     */
+    public function changeRefusal(string $action): ?string
+    {
+        return match (true) {
+            $action === 'revoke' && $this->revokedOn !== null => self::REVOKED,
+            $action === 'end' && $this->endedOn !== null => self::ENDED,
+            $action === 'end' && $this->expiresOn !== null => self::EXPIRED,
             default => null,
         };
     }

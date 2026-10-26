@@ -34,6 +34,16 @@ final class DomainTest extends TestCase
             $ended === null ? null : self::day($ended), null, $revoked === null ? null : self::day($revoked), '');
     }
 
+    public function testAConsentAlreadyRevokedOrEndedCannotBeRecordedSoAgain(): void
+    {
+        self::assertNull(self::consent()->changeRefusal('revoke'), 'a consent in force can be revoked');
+        self::assertSame(Consent::REVOKED, self::consent(revoked: '2026-05-01')->changeRefusal('revoke'),
+            'a second revoke (a double submit, or a page left open) is refused, not reported as done');
+        self::assertNull(self::consent(null, 'Discharge from treatment court')->changeRefusal('end'), 'an event consent can be ended once');
+        self::assertSame(Consent::ENDED, self::consent(null, 'Discharge from treatment court', '2026-06-01')->changeRefusal('end'));
+        self::assertSame(Consent::EXPIRED, self::consent()->changeRefusal('end'), 'a consent with an expiry date has no event to record');
+    }
+
     public function testAConsentHoldsFromSigningToItsExpiryDateInclusive(): void
     {
         $c = self::consent();

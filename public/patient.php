@@ -92,7 +92,14 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     } elseif (($action === 'revoke' || $action === 'end') && $canChange) {
         $consent = $consentRepo->find((int)($_POST['consent_id'] ?? 0), $pid);
         $on = $date('on');
-        if ($consent === null || $on === null || $on > $today || $on < $consent->signedOn) {
+        $already = $consent?->changeRefusal($action);
+        if ($already === Consent::REVOKED) {
+            $errors[] = sprintf(xl('This consent was already revoked on %s.'), Labels::date($consent->revokedOn));
+        } elseif ($already === Consent::ENDED) {
+            $errors[] = sprintf(xl('This consent was already recorded as ended on %s.'), Labels::date($consent->endedOn));
+        } elseif ($already === Consent::EXPIRED) {
+            $errors[] = xl('This consent ends on its expiry date, so there is no event to record.');
+        } elseif ($consent === null || $on === null || $on > $today || $on < $consent->signedOn) {
             $errors[] = xl('Enter a date between the day the consent was signed and today.');
         } elseif ($action === 'revoke') {
             $consentRepo->revoke($consent->id, $pid, $on, $text('note'), $userId);
