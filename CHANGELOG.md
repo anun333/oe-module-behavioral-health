@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.4 (unreleased)
+## 0.2.4 (2026-10-26)
 
 - **Revoking or ending a consent twice no longer reports success.** A second submit, or a page left open after someone else recorded it, used to say the revocation was recorded and write an audit entry, though nothing changed and the note was dropped. Now the page says the consent was already revoked (or ended) on that date, and records nothing. A consent with an expiry date can't be ended by an event, and the page says so.
 - **The next review's message:** when the requested date is on or before the review, the next review moves to the day after, and the message now says it's the earliest it can be (it said the latest the interval allows).
