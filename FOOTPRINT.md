@@ -98,11 +98,11 @@ As written in the source; whether they behave correctly for a given user is not 
 
 | part | files | lines |
 |---|---|---|
-| PHP logic (`src/`) | 17 | 1421 |
-| pages (`public/`) | 7 | 1201 |
-| tests (`tests/`, `phpunit.xml.dist`) | 5 | 258 |
+| PHP logic (`src/`) | 18 | 1456 |
+| pages (`public/`) | 7 | 1211 |
+| tests (`tests/`, `phpunit.xml.dist`) | 6 | 291 |
 | install SQL (`sql/`) | 2 | 173 |
-| module wiring | 5 | 153 |
+| module wiring | 5 | 157 |
 | other | 2 | 55 |
 | tools (`tools/`) | 1 | 31 |
 

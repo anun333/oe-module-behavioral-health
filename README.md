@@ -6,6 +6,8 @@ Part 2 consents and disclosures, and treatment plan reviews, for OpenEMR: for ce
 
 What installing it changes in your database, what it reads and writes, and what it hooks into are listed in [FOOTPRINT.md](FOOTPRINT.md), generated from the source.
 
+Using the module day to day, task by task for each role: see [GUIDE.md](GUIDE.md).
+
 ## What it does
 
 - **Consents.** Staff record each Part 2 consent from the signed form (Clinic Forms' Part 2 consent, or the clinic's own): who may receive the records, the purpose, how much and what kind of information, and when it ends, by a date or an event. The signed form stays in OpenEMR's Documents, and the record links to it. A revocation, or the day an expiration event happened, is recorded with its date.

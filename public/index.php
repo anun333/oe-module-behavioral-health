@@ -19,6 +19,7 @@ require_once __DIR__ . '/../../../../globals.php';
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Core\Header;
 use OpenHealthcare\BehavioralHealth\Bootstrap;
+use OpenHealthcare\BehavioralHealth\Guide;
 use OpenHealthcare\BehavioralHealth\Labels;
 use OpenHealthcare\BehavioralHealth\Repository\ConsentRepository;
 use OpenHealthcare\BehavioralHealth\Repository\DisclosureRepository;
@@ -45,6 +46,7 @@ $ending = (new ConsentRepository())->endingSoon($today, 30);
 <body class="body_top">
 <main class="container-fluid py-3" style="max-width: 70rem">
     <h1 class="h4"><?php echo xlt('Part 2 Disclosures'); ?></h1>
+    <p class="small mb-2"><a href="<?php echo attr(Guide::url()); ?>" target="_blank" rel="noopener"><?php echo xlt('Help'); ?><span class="sr-only"> <?php echo xlt('(opens in a new window)'); ?></span></a></p>
     <p class="text-muted small"><?php echo xlt('The consents and disclosures of each patient are on the Part 2 card of their dashboard.'); ?></p>
 
     <h2 class="h5 mt-4"><?php echo xlt('Disclosures in the last 30 days'); ?></h2>

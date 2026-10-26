@@ -19,6 +19,7 @@ use OpenEMR\Common\Database\QueryUtils;
 use OpenEMR\Core\Header;
 use OpenHealthcare\BehavioralHealth\Bootstrap;
 use OpenHealthcare\BehavioralHealth\Domain\Plan;
+use OpenHealthcare\BehavioralHealth\Guide;
 use OpenHealthcare\BehavioralHealth\Labels;
 use OpenHealthcare\BehavioralHealth\Repository\PlanRepository;
 use OpenHealthcare\BehavioralHealth\Repository\Settings;
@@ -61,6 +62,7 @@ OpenEmr::audit('other', 'Behavioral Health: treatment plans list viewed');
 <body class="body_top">
 <main class="container-fluid py-3" style="max-width: 80rem">
     <h1 class="h4"><?php echo xlt('Treatment Plans'); ?></h1>
+    <p class="small mb-2"><a href="<?php echo attr(Guide::url()); ?>" target="_blank" rel="noopener"><?php echo xlt('Help'); ?><span class="sr-only"> <?php echo xlt('(opens in a new window)'); ?></span></a></p>
     <p><?php echo xlt('Plans in progress, soonest review first. A plan is written in the Care Plan form of a visit; its reviews are recorded on the patient treatment plan page.'); ?>
         <?php if (AclMain::aclCheckCore('admin', 'super')) { ?><a href="settings.php" onclick="top.restoreSession()"><?php echo xlt('Settings'); ?></a><?php } ?></p>
     <nav class="mb-3">

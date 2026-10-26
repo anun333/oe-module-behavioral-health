@@ -34,7 +34,11 @@
             "footprint-not-covered": [
                 "Whether the permission checks above behave correctly for restricted users. The end-to-end check refuses a login without patients/disclosure every page, and lets one with add-only access record but not revoke; the README's \"Who can open what\" section lists the levels.",
                 "Whether a disclosure stays within its consent's scope: staff confirm that, since the module can't read the signed form. The unit tests in `tests/` cover the consent rules; the end-to-end check is described in the CHANGELOG."
-            ]
+            ],
+            "guide-labels-elsewhere": {
+                "Consents and disclosures": "templates/card.html.twig",
+                "Treatment plan": "templates/plan_card.html.twig"
+            }
         }
     }
 }

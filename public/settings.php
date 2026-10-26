@@ -19,6 +19,7 @@ use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Database\QueryUtils;
 use OpenEMR\Core\Header;
 use OpenHealthcare\BehavioralHealth\Domain\Plan;
+use OpenHealthcare\BehavioralHealth\Guide;
 use OpenHealthcare\BehavioralHealth\Repository\Settings;
 use OpenHealthcare\Common\OpenEmr;
 
@@ -54,6 +55,7 @@ $csrf = OpenEmr::csrfToken();
 <body class="body_top">
 <main class="container-fluid py-3" style="max-width: 60rem">
     <h1 class="h4"><?php echo xlt('Treatment plan settings'); ?></h1>
+    <p class="small mb-2"><a href="<?php echo attr(Guide::url()); ?>" target="_blank" rel="noopener"><?php echo xlt('Help'); ?><span class="sr-only"> <?php echo xlt('(opens in a new window)'); ?></span></a></p>
     <p><a href="plans.php" onclick="top.restoreSession()"><?php echo xlt('Back to treatment plans'); ?></a></p>
     <?php if ($saved) { ?>
         <div class="alert alert-success py-2"><?php echo xlt('Saved.'); ?></div>

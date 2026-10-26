@@ -23,6 +23,7 @@ use OpenEMR\Core\Header;
 use OpenHealthcare\BehavioralHealth\Bootstrap;
 use OpenHealthcare\BehavioralHealth\Domain\Consent;
 use OpenHealthcare\BehavioralHealth\Domain\Notice;
+use OpenHealthcare\BehavioralHealth\Guide;
 use OpenHealthcare\BehavioralHealth\Labels;
 use OpenHealthcare\BehavioralHealth\Repository\ConsentRepository;
 use OpenHealthcare\BehavioralHealth\Repository\DisclosureRepository;
@@ -152,6 +153,7 @@ $webRoot = OpenEmr::webRoot();
 <body class="body_top">
 <main class="container-fluid py-3" style="max-width: 80rem">
     <h1 class="h4"><?php echo xlt('Part 2 Consents and Disclosures'); ?></h1>
+    <p class="small mb-2"><a href="<?php echo attr(Guide::url()); ?>" target="_blank" rel="noopener"><?php echo xlt('Help'); ?><span class="sr-only"> <?php echo xlt('(opens in a new window)'); ?></span></a></p>
     <p class="mb-2">
         <strong><?php echo text(trim($patient['fname'] . ' ' . $patient['lname'])); ?></strong>
         · <?php echo xlt('DOB'); ?> <?php echo text(oeFormatShortDate((string)$patient['DOB'])); ?>
