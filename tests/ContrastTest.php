@@ -37,11 +37,19 @@ final class ContrastTest extends TestCase
             return ($light + 0.05) / ($dark + 0.05);
         };
         // Foreground on the backgrounds module pages use (white, the light theme's greys, the warning cell).
-        foreach (['#0056b3', '#004085', '#4b5563', '#b02a37'] as $text) {
+        foreach (['#0056b3', '#004085', '#4b5563', '#b02a37', '#856404'] as $text) {
             foreach (['#ffffff', '#f9fafb', '#f3f4f6', '#ffeeba'] as $background) {
                 self::assertGreaterThanOrEqual(4.5, $ratio($text, $background), "$text on $background");
             }
         }
         self::assertGreaterThanOrEqual(4.5, $ratio('#ffffff', '#0056b3'), 'white on the button');
+        self::assertGreaterThanOrEqual(4.5, $ratio('#ffffff', '#b02a37'), 'white on the danger outline when pressed');
+    }
+
+    public function testTheOutlinedWarningAndDangerButtonsTakeTheDarkerColours(): void
+    {
+        $style = Contrast::style('style_light.css');
+        self::assertMatchesRegularExpression('/\\.btn-outline-warning[^{]*\\{color:#856404;border-color:#856404\\}/', $style);
+        self::assertMatchesRegularExpression('/\\.btn-outline-danger[^{]*\\{color:#b02a37;border-color:#b02a37\\}/', $style);
     }
 }

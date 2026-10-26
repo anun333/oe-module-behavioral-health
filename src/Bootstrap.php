@@ -61,7 +61,7 @@ final class Bootstrap
     /** Ends a page with a short message, still as a whole page with its language and title. */
     public static function stop(string $title, string $message): never
     {
-        echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>' . text($title) . '</title></head><body><main><p>'
+        echo '<!DOCTYPE html><html lang="' . attr(Page::lang()) . '" dir="' . attr(Page::dir()) . '"><head><meta charset="utf-8"><title>' . text($title) . '</title></head><body><main><p>'
             . text($message) . '</p></main></body></html>';
         exit;
     }

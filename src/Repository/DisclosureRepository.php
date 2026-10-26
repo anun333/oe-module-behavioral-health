@@ -65,8 +65,11 @@ final class DisclosureRepository
         );
     }
 
-    /** @return list<Disclosure> newest first; from $from when given */
-    public function forPatient(int $pid, ?\DateTimeImmutable $from = null): array
+    /**
+     * @return list<Disclosure> newest first; from $from when given, and through $through (the whole
+     *         day) when given
+     */
+    public function forPatient(int $pid, ?\DateTimeImmutable $from = null, ?\DateTimeImmutable $through = null): array
     {
         $binds = [$pid, self::EVENT];
         $sql = self::SELECT . ' WHERE el.`patient_id` = ? AND el.`event` = ?';
@@ -74,7 +77,31 @@ final class DisclosureRepository
             $sql .= ' AND el.`date` >= ?';
             $binds[] = $from->format('Y-m-d');
         }
+        if ($through !== null) {
+            $sql .= ' AND el.`date` < ?';
+            $binds[] = self::dayAfter($through);
+        }
         return array_map(self::disclosure(...), QueryUtils::fetchRecords($sql . ' ORDER BY el.`date` DESC, el.`id` DESC', $binds));
+    }
+
+    /**
+     * How many of the patient's Part 2 disclosures are dated after $day. Core's Disclosures page
+     * accepts a future date, and an accounting that runs to today leaves those out, so the page says
+     * how many it left out rather than hiding them.
+     */
+    public function countAfter(int $pid, \DateTimeImmutable $day): int
+    {
+        $rows = QueryUtils::fetchRecords(
+            'SELECT COUNT(*) AS n FROM `extended_log` AS el WHERE el.`patient_id` = ? AND el.`event` = ? AND el.`date` >= ?',
+            [$pid, self::EVENT, self::dayAfter($day)],
+        );
+        return (int)($rows[0]['n'] ?? 0);
+    }
+
+    /** The start of the day after $day, as `extended_log.date` compares it. */
+    private static function dayAfter(\DateTimeImmutable $day): string
+    {
+        return $day->setTime(0, 0)->modify('+1 day')->format('Y-m-d H:i:s');
     }
 
     /** @return list<Disclosure> every patient's, from $from, newest first */

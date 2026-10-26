@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.5 (unreleased)
+
+- **The accounting of disclosures runs to today.** OpenEMR's Disclosures page accepts a date in the future, and a Part 2 disclosure entered there with one used to appear in an accounting labelled as ending today. It's now left out, and the page says how many are dated after today, so someone can check their dates on the Disclosures page rather than miss them.
+- **The plan list's filter buttons are easier to read.** Under the light and manila themes the outlined "Due" and "Overdue" buttons were 1.55:1 and 4.33:1 on the page's background; they now take #856404 and #b02a37 (5.3:1 and 6.2:1 on it).
+- **Pages declare the user's language.** Each page's `lang` and `dir` follow the signed-in user's OpenEMR language (openhealthcare-common 1.4.0's `pageLang()`), so a screen reader reads translated pages in that language. The cover sheet's 42 CFR 2.32 statement stays marked as English, since it's the regulation's own words.
+- Requires openhealthcare-common 1.4.0.
+
 ## 0.2.4 (2026-10-26)
 
 - **Revoking or ending a consent twice no longer reports success.** A second submit, or a page left open after someone else recorded it, used to say the revocation was recorded and write an audit entry, though nothing changed and the note was dropped. Now the page says the consent was already revoked (or ended) on that date, and records nothing. A consent with an expiry date can't be ended by an event, and the page says so.

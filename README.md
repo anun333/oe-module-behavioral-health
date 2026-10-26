@@ -56,7 +56,7 @@ From the OpenEMR directory:
 composer require anun333/oe-module-behavioral-health
 ```
 
-The installer plugin places it in `interface/modules/custom_modules/oe-module-behavioral-health/`, and Composer brings [openhealthcare-common](https://github.com/anun333/openhealthcare-common) with it. Without Composer, copy this directory there and run `composer install --no-dev` in it, which puts openhealthcare-common in its own `vendor/`. The module stays switched off until it finds that package one way or the other.
+The installer plugin places it in `interface/modules/custom_modules/oe-module-behavioral-health/`, and Composer brings [openhealthcare-common](https://github.com/anun333/openhealthcare-common) with it. Without Composer, copy this directory there and run `composer install --no-dev` in it, which puts openhealthcare-common in its own `vendor/`. The module stays switched off until it finds that package one way or the other. If you copy several of our modules in by hand, keep their `vendor/openhealthcare-common` at the same version: OpenEMR loads the first copy it finds for all of them.
 
 Then go to Modules › Manage Modules › Unregistered, and **Register**, **Install** and **Enable** it. Installing adds two tables of its own and the "Part 2: with written consent" disclosure type.
 

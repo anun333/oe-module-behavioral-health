@@ -45,7 +45,7 @@ $csrf = OpenEmr::csrfToken();
 ?>
 <!DOCTYPE html>
 <?php // The module's own text is written in English. ?>
-<html lang="en">
+<html lang="<?php echo attr(\OpenHealthcare\BehavioralHealth\Page::lang()); ?>" dir="<?php echo attr(\OpenHealthcare\BehavioralHealth\Page::dir()); ?>">
 <head>
     <meta charset="utf-8">
     <title><?php echo xlt('Treatment plan settings'); ?></title>

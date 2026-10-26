@@ -36,13 +36,16 @@ if ($patient === null) {
 $today = new DateTimeImmutable('today');
 $chosen = DateTimeImmutable::createFromFormat('!Y-m-d', (string)($_GET['from'] ?? ''));
 $from = Accounting::from($today, $chosen === false ? null : $chosen);
-$disclosures = (new DisclosureRepository())->forPatient($pid, $from);
+$disclosureRepo = new DisclosureRepository();
+$disclosures = $disclosureRepo->forPatient($pid, $from, $today);
+// Dated after today on core's Disclosures page: outside an accounting that runs to today, but said.
+$later = $disclosureRepo->countAfter($pid, $today);
 $facility = QueryUtils::fetchRecords('SELECT `name` FROM `facility` ORDER BY `primary_business_entity` DESC, `id` LIMIT 1')[0]['name'] ?? '';
 OpenEmr::audit('patient-record-select', 'Behavioral Health: accounting of Part 2 disclosures from ' . $from->format('Y-m-d'), $pid);
 ?>
 <!DOCTYPE html>
 <?php // The module's own text is written in English. ?>
-<html lang="en">
+<html lang="<?php echo attr(\OpenHealthcare\BehavioralHealth\Page::lang()); ?>" dir="<?php echo attr(\OpenHealthcare\BehavioralHealth\Page::dir()); ?>">
 <head>
     <meta charset="utf-8">
     <title><?php echo xlt('Accounting of Disclosures'); ?></title>
@@ -72,6 +75,9 @@ OpenEmr::audit('patient-record-select', 'Behavioral Health: accounting of Part 2
         · <?php echo xlt('ID'); ?> <?php echo text((string)$patient['pubpid']); ?>
         <br><?php echo xlt('Disclosures from'); ?> <?php echo text(Labels::date($from)); ?> <?php echo xlt('to'); ?> <?php echo text(Labels::date($today)); ?>
     </p>
+    <?php if ($later > 0) { ?>
+        <div class="alert alert-warning no-print"><?php echo text(sprintf(xl('%d Part 2 disclosures are dated after today, so they are not in this accounting. Check their dates on the Disclosures page of OpenEMR.'), $later)); ?></div>
+    <?php } ?>
     <?php $unlinked = count(array_filter($disclosures, static fn($d): bool => $d->purpose === '')); ?>
     <?php if ($unlinked > 0) { ?>
         <div class="alert alert-warning no-print"><?php echo text((string)$unlinked); ?> <?php echo xlt('of these were entered on the Disclosures page of OpenEMR with no consent linked, so their purpose is not recorded here. Add it to their description there before giving this to the patient.'); ?></div>

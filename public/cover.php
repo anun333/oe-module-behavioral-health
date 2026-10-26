@@ -42,8 +42,8 @@ OpenEmr::audit('patient-record-select', "Behavioral Health: cover sheet printed 
 $place = trim(implode(', ', array_filter([(string)($facility['street'] ?? ''), trim((string)($facility['city'] ?? '') . ' ' . (string)($facility['state'] ?? '') . ' ' . (string)($facility['postal_code'] ?? ''))])));
 ?>
 <!DOCTYPE html>
-<?php // The module's own text is written in English; the statement is the regulation's. ?>
-<html lang="en">
+<?php // The module's labels follow the user's language; the statement is the regulation's own English words. ?>
+<html lang="<?php echo attr(\OpenHealthcare\BehavioralHealth\Page::lang()); ?>" dir="<?php echo attr(\OpenHealthcare\BehavioralHealth\Page::dir()); ?>">
 <head>
     <meta charset="utf-8">
     <title><?php echo xlt('Notice to Accompany Disclosure'); ?></title>
@@ -69,7 +69,7 @@ $place = trim(implode(', ', array_filter([(string)($facility['street'] ?? ''), t
         <tr><th scope="row"><?php echo xlt('Records'); ?></th><td><?php echo text($disclosure->description); ?></td></tr>
     </table>
 
-    <div class="statement my-3">
+    <div class="statement my-3" lang="en">
         <?php foreach (Notice::paragraphs($disclosure->statement) as $paragraph) { ?>
             <p><?php echo text($paragraph); ?></p>
         <?php } ?>

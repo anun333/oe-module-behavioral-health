@@ -40,7 +40,7 @@ Set the date. Choose **Revoked** if the patient revoked it, or **Event happened*
 
 *Where:* the patient's Part 2 page › **Accounting of disclosures**.
 
-Choose **From** (3 years back by default, or a shorter period the patient asks for) and **Show**, then **Print**. If the page says some disclosures were entered on OpenEMR's Disclosures page with no consent linked, add their purpose there before giving it to the patient.
+Choose **From** (3 years back by default, or a shorter period the patient asks for) and **Show**, then **Print**. If the page says some disclosures were entered on OpenEMR's Disclosures page with no consent linked, add their purpose there before giving it to the patient. If it says some are dated after today, check those dates there: the accounting runs to today, so they're left out.
 
 ### See recent disclosures and consents ending soon
 
