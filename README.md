@@ -58,6 +58,8 @@ composer require anun333/oe-module-behavioral-health
 
 The installer plugin places it in `interface/modules/custom_modules/oe-module-behavioral-health/`, and Composer brings [openhealthcare-common](https://github.com/anun333/openhealthcare-common) with it. Without Composer, copy this directory there and run `composer install --no-dev` in it, which puts openhealthcare-common in its own `vendor/`. The module stays switched off until it finds that package one way or the other. If you copy several of our modules in by hand, keep their `vendor/openhealthcare-common` at the same version: OpenEMR loads the first copy it finds for all of them.
 
+**After adding, upgrading or removing a module copied in by hand, restart the container (or Apache).** OpenEMR's official Docker images (8.0.0 to 8.5.0) keep in APCu which file holds each class, and each class they didn't find, across requests: until a restart, a class once not found stays not found, and a removed module's classes still point at its folder. An OpenEMR built from source without Composer's `--apcu-autoloader` has no such cache.
+
 Then go to Modules › Manage Modules › Unregistered, and **Register**, **Install** and **Enable** it. Installing adds two tables of its own and the "Part 2: with written consent" disclosure type.
 
 ## Compatibility
