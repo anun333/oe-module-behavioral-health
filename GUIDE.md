@@ -42,6 +42,8 @@ Set the date. Choose **Revoked** if the patient revoked it, or **Event happened*
 
 Choose **From** (3 years back by default, or a shorter period the patient asks for) and **Show**, then **Print**. If the page says some disclosures were entered on OpenEMR's Disclosures page with no consent linked, add their purpose there before giving it to the patient. If it says some are dated after today, check those dates there: the accounting runs to today, so they're left out.
 
+Keeping this accounting is good practice, but the Part 2 rule's own requirement for it (42 CFR 2.25) isn't in force yet: HHS put its compliance date on hold until it revises HIPAA's accounting rule (45 CFR 164.528), which it hasn't done.
+
 ### See recent disclosures and consents ending soon
 
 *Where:* the main menu › **Part 2 Disclosures**.
