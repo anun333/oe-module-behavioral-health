@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.5 (unreleased)
+## 0.2.5 (2026-10-26)
 
 - **The accounting of disclosures runs to today.** OpenEMR's Disclosures page accepts a date in the future, and a Part 2 disclosure entered there with one used to appear in an accounting labelled as ending today. It's now left out, and the page says how many are dated after today, so someone can check their dates on the Disclosures page rather than miss them.
 - **The plan list's filter buttons are easier to read.** Under the light and manila themes the outlined "Due" and "Overdue" buttons were 1.55:1 and 4.33:1 on the page's background; they now take #856404 and #b02a37 (5.3:1 and 6.2:1 on it).
