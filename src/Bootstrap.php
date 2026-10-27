@@ -23,6 +23,8 @@ use OpenEMR\Menu\MenuEvent;
 use OpenHealthcare\BehavioralHealth\Card\Part2Card;
 use OpenHealthcare\BehavioralHealth\Card\PlanCard;
 use OpenHealthcare\BehavioralHealth\Worklist\PlanReviewSource;
+use OpenHealthcare\Common\Contract\Worklist\Worklist;
+use OpenHealthcare\Common\Contract\Worklist\WorkSource;
 use OpenHealthcare\Common\OpenEmr;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Loader\FilesystemLoader;
@@ -120,13 +122,16 @@ final class Bootstrap
         }
     }
 
-    /** "Treatment plan reviews" in the Staff Worklist, for whoever may see medical records, when the Worklist is installed. */
+    /**
+     * "Treatment plan reviews" in the Staff Worklist (0.8.0 or later), for whoever may see medical records. The tab is
+     * built on openhealthcare-common's contract; where a module copied in by hand loaded an older copy of the library
+     * first, the contract isn't there and the tab is left out rather than stop the page.
+     */
     public function addWorklistTab(object $event): void
     {
-        if (!method_exists($event, 'addSource') || !interface_exists('OpenHealthcare\\StaffWorklist\\Source\\WorkSourceInterface')
-            || !AclMain::aclCheckCore('patients', 'med')) {
+        if (!interface_exists(WorkSource::class) || !AclMain::aclCheckCore('patients', 'med')) {
             return;
         }
-        $event->addSource(new PlanReviewSource($event->now), xl('Treatment plan reviews'), xl('Clinician'));
+        Worklist::contribute($event, new PlanReviewSource(Worklist::now($event)), xl('Treatment plan reviews'), xl('Clinician'));
     }
 }

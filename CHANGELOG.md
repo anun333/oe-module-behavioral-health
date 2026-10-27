@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.6 (unreleased)
+
+- **The Staff Worklist tab is built on openhealthcare-common's shared contract** (1.5.0), so it loads without the Worklist's classes and has unit tests of its own. Staff see the same "Treatment plan reviews" tab with the same rows, on any Worklist from 0.8.0. The bootstrap also registers the library's contracts under their own prefix, so they load where a module copied in by hand carries an older copy that registered first; if no copy with the contracts is there at all, the tab is left out rather than stop the page.
+- Requires openhealthcare-common 1.5.0.
+- **Checked:** unit tests on PHP 8.2 and 8.5 (28; 4 new: due and overdue reviews become items keyed by the latest review, with the care plan visit's sensitivity; one patient's recheck; nothing due reads no patients; the tab reaches a Worklist through the contract). `dev/behavioral_health_check.py` on OpenEMR 8.4.1 with Worklist 0.9.0, and on master with Worklist 0.8.7: a review past due is in the tab and an ended plan leaves it; all passed.
+
 ## 0.2.5 (2026-10-26)
 
 - **The accounting of disclosures runs to today.** OpenEMR's Disclosures page accepts a date in the future, and a Part 2 disclosure entered there with one used to appear in an accounting labelled as ending today. It's now left out, and the page says how many are dated after today, so someone can check their dates on the Disclosures page rather than miss them.
